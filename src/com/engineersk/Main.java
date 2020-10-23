@@ -437,9 +437,7 @@ public class Main {
         System.out.println("WELCOME TO TEXT DECRYPTION CIPHER");
         System.out.println("_________________________________");
         System.out.println("This program is designed for players to decrypt a string of encrypted text in random ");
-        System.out.println("lower case alphabets into the original text in upper case in less than 1000 seconds");
-        System.out.println("The total time taken for the player to decrypt the encrypted text to the original text");
-        System.out.println("completely less than a thousand seconds is the total score");
+        System.out.println("lower case alphabets into the original text in upper case");
         System.out.println();
         System.out.println("The game has two modes for which one is to be selected for decryption");
         System.out.println("1. NORMAL MODE");
@@ -481,9 +479,8 @@ public class Main {
         System.out.println();
         System.out.println("When player enters \'RESET\', the decrypted text is completely reversed ");
         System.out.println("to encrypted version and help counter is reset to 0, to decrypt the text again ");
-        System.out.println("but time continues reading.");
         System.out.println();
-        System.out.println("Enjoy!!!");
+        System.out.println("Enjoy!!!\n");
     }
 
     private static void displayGameInstruction(String encryptedText, String decryptedText) {
