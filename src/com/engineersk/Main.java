@@ -20,22 +20,21 @@ public class Main {
                 "design patterns", "programmers", "object-oriented programming", "networking",
                 "communication","technology", "programming language", "assembly language", "engineering",
                 "interface", "electronics", "control", "robotics", "data structures", "algorithms",
-                "artificial intelligence"};
+                "artificial intelligence", "HacktoberFest2020", "Open-Source", "Contribution"};
 
-        String text="";
+        StringBuilder text= new StringBuilder();
 
         for(int i=0; i<8; ++i){
             String word;
             for(int j=0; j<100; ++j){
                 Random rnd = new Random();
                 word=words[rnd.nextInt(words.length)];
-                if(j<100)
-                    word+=" ";
-                text+=word;
+                word+=" ";
+                text.append(word);
             }
-            text+="\n";
+            text.append("\n");
         }
-        return text;
+        return text.toString();
     }
 
     public static void startGame(String[] paragraphTexts){ 
@@ -64,10 +63,7 @@ public class Main {
                     System.out.println();
                 }
             }
-            catch(IllegalArgumentException illegalArgumentEx){
-                System.err.println("An integer value is expected!!!");
-            }
-            catch(InputMismatchException inputMismatchEx){
+            catch(IllegalArgumentException | InputMismatchException illegalArgumentEx){
                 System.err.println("An integer value is expected!!!");
             }
 
@@ -81,8 +77,7 @@ public class Main {
         if(menuOption == 1){
             System.out.println("NORMAL MODE");
             Random rnd = new Random();
-            String randomParagraph = paragraphTexts[rnd.nextInt(paragraphTexts.length)];
-            extractedParagraph=randomParagraph;
+            extractedParagraph = paragraphTexts[rnd.nextInt(paragraphTexts.length)];
         }else{
             System.out.println("TEST MODE");
             String[] truncatedTexts = new String[paragraphTexts.length];
@@ -114,13 +109,8 @@ public class Main {
                     System.out.println("Invalid entry!!!");
                     System.out.println();
                 }
-
-
             }
-            catch(IllegalArgumentException illegalArgumentEx){
-                System.err.println("An integer value is expected!!!");
-            }
-            catch(InputMismatchException inputMismatchEx){
+            catch(IllegalArgumentException | InputMismatchException illegalArgumentEx){
                 System.err.println("An integer value is expected!!!");
             }
 
@@ -135,12 +125,12 @@ public class Main {
         char[] alphabets = new char[alphabetLength];
         char[] randomAlphabets = new char[alphabetLength];
 
-        generateRandomAlphabets(alphabetLength, alphabets, randomAlphabets);
+        generateRandomAlphabets(alphabets, randomAlphabets);
 
-        String rawStringToUpper = rawString.toUpperCase();;
+        String rawStringToUpper = rawString.toUpperCase();
+        System.out.println("*****PARAGRAPH TEXT*************");
         System.out.println(rawStringToUpper);
-        System.out.println();
-        System.out.println();
+        System.out.println('\n');
         String encryptedParagraph="";
 
         for(int i=0; i<rawStringToUpper.length(); ++i){
@@ -153,7 +143,6 @@ public class Main {
                         encryptedParagraph = replaceText(rawStringToUpper, String.valueOf(rawStringToUpper.charAt(i)),
                                 String.valueOf(randomAlphabets[j]).toLowerCase());
                         rawStringToUpper = encryptedParagraph;
-                        System.out.println(rawStringToUpper);
                     }
                 }
                 for(int k=0; k<encryptedParagraph.length(); ++k){
@@ -168,18 +157,19 @@ public class Main {
                 if(isEncryptedParagraph)
                     break;
             }
-
         }
+        System.out.println("****ENCRYPTED PARAGRAPH****");
         System.out.println(encryptedParagraph);
+        System.out.println();
         return encryptedParagraph;
     }
 
-    private static void generateRandomAlphabets(final int alphabetLength, char[] alphabets, char[] randomAlphabets) {
+    private static void generateRandomAlphabets(char[] alphabets, char[] randomAlphabets) {
         for(int i=0; i<alphabets.length; ++i){
             int alphabetAsciiInteger = (int)'A' + i;
             alphabets[i] = (char)alphabetAsciiInteger;
         }
-
+        System.out.println("****RANDOMLY GENERATED ALPHABETS****");
         for(char alphabet : alphabets)
             System.out.print(alphabet + " ");
         System.out.println();
@@ -190,7 +180,7 @@ public class Main {
             int sameAlphabetIndex;
             do{
                 sameAlphabetIndex=-1;
-                int randomAlphabetAsciiInteger = (int)'A' + rnd.nextInt(alphabetLength);
+                int randomAlphabetAsciiInteger = (int)'A' + rnd.nextInt(26);
 
                 randomAlphabets[i] = (char)randomAlphabetAsciiInteger;
 
@@ -205,9 +195,9 @@ public class Main {
             }while(sameAlphabetIndex>=0 && sameAlphabetIndex<=i);
         }
 
-        for(int i=0; i<alphabetLength; ++i)
+        for(int i = 0; i< 26; ++i)
             System.out.printf("%s ", randomAlphabets[i]);
-        System.out.println();
+        System.out.println("\n");
     }
 
     private static void decryptParagraph(String encryptedText, String rawString){
@@ -230,7 +220,7 @@ public class Main {
                     entry = entry.toUpperCase();
 
                 if((!entry.isEmpty() && entry.length() <= 2) || entry.equals("HELP")
-                        ||entry.equals("RESET") || entry.equals("ABOUT")){
+                        ||entry.equals("RESET") || entry.equals("ABOUT") || entry.equals("QUIT")){
 
                     isValidUserInput = true;
                     char mainLetter = '0';
@@ -256,7 +246,7 @@ public class Main {
                                 if((entry.length()==2)
                                         && (helpCharacter[index] == Character.toUpperCase(replacementLetter))
                                         || ((entry.length() == 1)
-                                        &&(helpCharacter[index] == Character.toUpperCase(mainLetter)))){
+                                        &&(helpCharacter[index] == Character.toUpperCase(mainLetter)))) {
                                     isHelpCharacter = true;
                                     break;
                                 }
@@ -352,8 +342,8 @@ public class Main {
                                 }
                             }
 
-                            if((lowerCaseExists==false&&entry.length()==2)
-                                    || (upperCaseExists==false&&entry.length()==1)){
+                            if((!lowerCaseExists &&entry.length()==2)
+                                    || (!upperCaseExists &&entry.length()==1)){
                                 if(entry.length()==1){
                                     System.out.println("\'"+String.valueOf(mainLetter).toUpperCase()+"\'"
                                             + " does not exist in "+decryptedText +
@@ -365,11 +355,11 @@ public class Main {
                             }
 
                             if(entry.length()==2&&isHelpCharacter){
-                                System.out.println("All occurences of "+String.valueOf(replacementLetter).toUpperCase()
+                                System.out.println("All occurrences of "+String.valueOf(replacementLetter).toUpperCase()
                                         + " are decrypted");
                             }
                             if(entry.length()==1&&isHelpCharacter) {
-                                System.out.println("All occurences of " + String.valueOf(mainLetter).toUpperCase()
+                                System.out.println("All occurrences of " + String.valueOf(mainLetter).toUpperCase()
                                         + " are decrypted");
                             }
                         }
@@ -388,9 +378,10 @@ public class Main {
 
                     else if(entry.equals("ABOUT"))
                         aboutGame();
-
-                    else
-                        throw new InputMismatchException();
+                    else {
+                        System.out.println("***GAME OVER!!! You Quit***");
+                        break;
+                    }
 
 
                     boolean isValidAnswer = false;
@@ -424,8 +415,14 @@ public class Main {
             catch (InputMismatchException inputMismatchEx){
                 System.err.println("Please enter 2 alphabets");
             }
-
-            if(answer == 'n'|| answer == 'N')
+            if(rawString.toUpperCase().equals(decryptedText))
+            {
+                System.out.println("**DECRYPTION COMPLETE***");
+                System.out.println("Encrypted Text: "+encryptedText);
+                System.out.println("Decrypted Text: "+decryptedText);
+                System.out.println();
+            }
+            if(answer == 'n'|| answer == 'N' || rawString.toUpperCase().equals(decryptedText))
                 break;
 
         }while(isValidUserInput);
@@ -450,18 +447,18 @@ public class Main {
         System.out.println("For example,");
         System.out.println("if the encrypted text to be decrypted is \'ipuum\'");
         System.out.println("and user enters two letters such as \'ih\',");
-        System.out.println("all occurences of \'i\' in \'ipuum\' will be replaced with \'H\' on decryption");
+        System.out.println("all occurrences of \'i\' in \'ipuum\' will be replaced with \'H\' on decryption");
         System.out.println("generating a decrypted text Hpuum corresponding to i>H");
-        System.out.println("Similarly, if user enters \'uL\', all occurences of \'u\' will be replaced with ");
+        System.out.println("Similarly, if user enters \'uL\', all occurrences of \'u\' will be replaced with ");
         System.out.println("\'L\' updating the decrypted text with \'i>H\' and \'u>L\' pairs as \'HpLLm\'");
         System.out.println("The game would display both encrypted text and player's decrypted version of ");
         System.out.println("the text as long as the player continues playing.");
         System.out.println();
-        System.out.println("if the player wants to reverse all occurences of decrypted character \'H\' to ");
+        System.out.println("if the player wants to reverse all occurrences of decrypted character \'H\' to ");
         System.out.println("the encrypted lower case in \'HpLLm\', the player will simply type \'h\' and ");
         System.out.println("player's decrypted version of the text becomes \'ipLLm\'");
         System.out.println();
-        System.out.println("if the player wants to decrypt all occurences of lower case \'p\' to decrypted ");
+        System.out.println("if the player wants to decrypt all occurrences of lower case \'p\' to decrypted ");
         System.out.println("upper case \'L\' in \'ipLLm\', the player will enter two letters \'pL\' and ");
         System.out.println("player's decrypted version of the text becomes \'iLuum\', this means \'L\' is ");
         System.out.println("reversed to \'u\' from \'u>L\' pair and \'p>L\' becomes new pair");
@@ -471,14 +468,16 @@ public class Main {
         System.out.println("If the player wants to replace \'L\' with \'R\', the player will type in \'pr\'");
         System.out.println("and the player's decrypted version of the text becomes \'iRuum\'.");
         System.out.println(" where \'p\' is the encrypted pair of \'L\' and \'R\' is the upper case character ");
-        System.out.println("for which all occurences of \'p\' will be decrypted to \'R\' causing \'R\' to be ");
+        System.out.println("for which all occurrences of \'p\' will be decrypted to \'R\' causing \'R\' to be ");
         System.out.println("automatically encrypted back to \'u\' which was previous \'u>R\' pair");
         System.out.println();
-        System.out.println("When player enters \'HELP\', all occurences of a random encrypted character is ");
+        System.out.println("When player enters \'HELP\', all occurrences of a random encrypted character is ");
         System.out.println("automatically decrypted permanently, if the player does not reset the game");
         System.out.println();
         System.out.println("When player enters \'RESET\', the decrypted text is completely reversed ");
         System.out.println("to encrypted version and help counter is reset to 0, to decrypt the text again ");
+        System.out.println();
+        System.out.println("When player enters \'QUIT\', THE GAME IS OVER!!!");
         System.out.println();
         System.out.println("Enjoy!!!\n");
     }
@@ -489,7 +488,7 @@ public class Main {
         System.out.println("\'i\', the first letter represents the character to be replaced in the" +
                 " encrypted text");
         System.out.println("\'j\', the second letter represents the replacing character for " +
-                "all occurences of \'i\', the first letter of the encrypted text entered");
+                "all occurrences of \'i\', the first letter of the encrypted text entered");
 
         System.out.println();
 
@@ -501,11 +500,11 @@ public class Main {
         System.out.println("type \"RESET\" to reset decrypted string to encrypted string to try again");
         System.out.println();
         System.out.println("type \"ABOUT\" for information on game play");
+        System.out.println();
+        System.out.println("type \"QUIT\" to quit game");
         System.out.println("\n");
         System.out.println("GAME HINT: help can be used only 5 times");
         System.out.println();
-       // System.out.println("encrypted text: " + encryptedText);
-       // System.out.println("decrypted text: " + decryptedText);
     }
 
     private static void printDecryptedText(String decryptedText){
